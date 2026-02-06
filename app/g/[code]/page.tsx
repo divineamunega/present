@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import Layout from "../../../components/Layout";
 import Card from "../../../components/Card";
 import Button from "../../../components/Button";
@@ -15,6 +16,7 @@ export default function GiftPage() {
   const router = useRouter();
   const code = typeof params.code === "string" ? params.code : "";
   const [giftTitle, setGiftTitle] = useState<string | null>(null);
+  const [giftType, setGiftType] = useState<"request" | "claimable" | null>(null);
   const [suggestedAmounts, setSuggestedAmounts] = useState<number[]>([]);
   const [customAllowed, setCustomAllowed] = useState(false);
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
@@ -33,6 +35,7 @@ export default function GiftPage() {
       return;
     }
     setGiftTitle(present.title);
+    setGiftType(present.type);
     setSuggestedAmounts(present.suggestedAmounts);
     setCustomAllowed(present.customAllowed);
     setSelectedAmount(present.suggestedAmounts[0] ?? null);
@@ -60,6 +63,30 @@ export default function GiftPage() {
               This present code doesn&apos;t exist. Ask the creator to share a new
               link.
             </p>
+          </div>
+        </section>
+      </Layout>
+    );
+  }
+
+  if (giftType === "claimable") {
+    return (
+      <Layout>
+        <section className="px-4 py-12 md:px-10">
+          <div className="mx-auto max-w-3xl text-center">
+            <h1 className="text-3xl font-black leading-[1.1]" style={headingStyle}>
+              This link is claimable
+            </h1>
+            <p className="mt-3 text-sm text-[var(--muted-foreground)]">
+              This present was already paid for. Use the claim page to receive it.
+            </p>
+            <div className="mt-6">
+              <Link href={`/claim/${code}`}>
+                <Button variant="primary" shape="pill">
+                  Go to claim page
+                </Button>
+              </Link>
+            </div>
           </div>
         </section>
       </Layout>

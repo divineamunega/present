@@ -39,6 +39,14 @@ export const saveGift = (gift: Gift) => {
   write(GIFTS_KEY, next);
 };
 
+export const updateGift = (code: string, updates: Partial<Gift>) => {
+  const next = getGifts().map((gift) =>
+    gift.code === code ? { ...gift, ...updates } : gift,
+  );
+  giftsCache = next;
+  write(GIFTS_KEY, next);
+};
+
 export const getPayments = () => {
   if (paymentsCache) return paymentsCache;
   paymentsCache = read<Payment[]>(PAYMENTS_KEY, []);

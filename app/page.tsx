@@ -102,7 +102,7 @@ export default function Home() {
               accent="accent"
               shadow="pop"
               hoverAccent
-              hoverAccentColor="#8B5CF6"
+              hoverAccentColor="purple"
               className="mx-auto w-full max-w-md bg-white/70"
             >
               <div className="overflow-hidden rounded-xl border-2 border-[var(--foreground)] bg-[#8B5CF6] p-2 shadow-pop">

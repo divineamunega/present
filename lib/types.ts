@@ -7,6 +7,8 @@ export type Gift = {
   note: string;
   createdAt: string;
   creatorName: string;
+  type: "request" | "claimable";
+  claimed?: boolean;
 };
 
 export type Payment = {

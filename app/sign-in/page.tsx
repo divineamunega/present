@@ -25,14 +25,11 @@ export default function SignInPage() {
                 no stress.
               </p>
               <div className="mt-8">
-                <Button variant="primary" shape="pill" className="w-full">
+                <Link href="/dashboard" className="block">
+                  <Button variant="primary" shape="pill" className="w-full">
                   <span className="flex items-center gap-3">
                     <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-pop">
-                      <svg
-                        viewBox="0 0 48 48"
-                        aria-hidden
-                        className="h-4 w-4"
-                      >
+                      <svg viewBox="0 0 48 48" aria-hidden className="h-4 w-4">
                         <path
                           fill="#EA4335"
                           d="M24 9.5c3.5 0 6.7 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.5 13.2l8 6.2C12.3 13.4 17.7 9.5 24 9.5z"
@@ -53,14 +50,19 @@ export default function SignInPage() {
                     </span>
                     Continue with Google
                   </span>
-                </Button>
+                  </Button>
+                </Link>
               </div>
               <p className="mt-4 text-xs text-[var(--muted-foreground)]">
                 By continuing you agree to our terms and privacy policy.
               </p>
             </Card>
 
-            <Card accent="accent" className="bg-white/70">
+            <Card
+              accent="accent"
+              className="bg-white/70"
+              hoverAccentColor="purple"
+            >
               <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted-foreground)]">
                 Why sign in?
               </p>

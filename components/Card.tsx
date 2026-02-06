@@ -1,6 +1,6 @@
 "use client";
 
-import { HTMLAttributes, useId, useMemo } from "react";
+import { HTMLAttributes } from "react";
 import { motion } from "motion/react";
 import { cn } from "../lib/cn";
 
@@ -11,10 +11,9 @@ type CardProps = Omit<
   accent?: "accent" | "secondary" | "tertiary" | "quaternary";
   shadow?: "soft" | "pop";
   hoverAccent?: boolean;
-  hoverAccentColor?: string;
+  hoverAccentColor?: "purple" | "yellow";
+  disableHoverFx?: boolean;
 };
-
-const accentPalette = ["#8B5CF6", "#FBBF24"];
 
 const shadowStyles: Record<NonNullable<CardProps["shadow"]>, string> = {
   soft: "shadow-sticker",
@@ -25,23 +24,13 @@ export default function Card({
   accent = "accent",
   shadow = "soft",
   hoverAccent = true,
-  hoverAccentColor,
+  hoverAccentColor = "purple",
+  disableHoverFx = false,
   className,
   children,
   ...props
 }: CardProps) {
-  const id = useId();
-  const accentColor = useMemo(() => {
-    if (hoverAccentColor) return hoverAccentColor;
-    const input = `${accent}-${id}`;
-    let hash = 0;
-    for (let i = 0; i < input.length; i += 1) {
-      hash = (hash << 5) - hash + input.charCodeAt(i);
-      hash |= 0;
-    }
-    const index = Math.abs(hash) % accentPalette.length;
-    return accentPalette[index];
-  }, [accent, id]);
+  const accentColor = hoverAccentColor === "yellow" ? "#FBBF24" : "#8B5CF6";
 
   const {
     onAnimationStart,
@@ -52,11 +41,12 @@ export default function Card({
 
   return (
     <motion.div
-      whileHover={{ y: -2, rotate: -1, scale: 1.02 }}
-      whileTap={{ y: 1, rotate: 0, scale: 0.99 }}
+      whileHover={disableHoverFx ? undefined : { y: -2, rotate: -1, scale: 1.02 }}
+      whileTap={disableHoverFx ? undefined : { y: 1, rotate: 0, scale: 0.99 }}
       transition={{ type: "spring", stiffness: 220, damping: 18 }}
       className={cn(
-        "group relative rounded-xl border-2 border-[var(--foreground)] bg-[var(--card)] p-5 text-[var(--foreground)] transition-all duration-300 ease-bounce hover:-rotate-1 hover:scale-[1.02]",
+        "group relative rounded-xl border-2 border-[var(--foreground)] bg-[var(--card)] p-5 text-[var(--foreground)] transition-all duration-300 ease-bounce",
+        !disableHoverFx && "hover:-rotate-1 hover:scale-[1.02]",
         hoverAccent &&
           "hover:border-[var(--card-accent)] hover:shadow-[8px_8px_0_0_var(--card-accent)]",
         shadowStyles[shadow],

@@ -13,17 +13,22 @@ export default function SharePage() {
   const params = useParams();
   const code = typeof params.code === "string" ? params.code : "";
   const [giftExists, setGiftExists] = useState<boolean | null>(null);
+  const [giftType, setGiftType] = useState<"request" | "claimable">("request");
   const [copied, setCopied] = useState(false);
+
+  const sharePath = giftType === "claimable" ? `/claim/${code}` : `/g/${code}`;
 
   const giftLink = useMemo(() => {
     if (!code) return "";
     if (typeof window === "undefined") return "";
-    return `${window.location.origin}/g/${code}`;
-  }, [code]);
+    return `${window.location.origin}${sharePath}`;
+  }, [code, sharePath]);
 
   useEffect(() => {
     if (!code) return;
-    setGiftExists(Boolean(getGift(code)));
+    const gift = getGift(code);
+    setGiftExists(Boolean(gift));
+    if (gift?.type) setGiftType(gift.type);
   }, [code]);
 
   if (giftExists === false) {
@@ -41,7 +46,7 @@ export default function SharePage() {
               We couldn&apos;t find that present code. Try creating a new link.
             </p>
             <div className="mt-6">
-              <Link href="/create">
+              <Link href="/create?type=request">
                 <Button variant="primary" shape="pill">Create a present link</Button>
               </Link>
             </div>
@@ -55,16 +60,18 @@ export default function SharePage() {
     <Layout>
       <section className="px-4 py-12 md:px-10">
         <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-[1.1fr_0.9fr]">
-          <Card accent="accent" shadow="pop" className="bg-white/70">
+          <Card shadow="pop" className="bg-white/70" disableHoverFx>
             <h1 className="text-3xl font-black leading-[1.1]" style={headingStyle}>
               Share your link
             </h1>
             <p className="mt-3 text-sm text-[var(--muted-foreground)]">
-              Send it on WhatsApp, Instagram, or anywhere.
+              {giftType === "claimable"
+                ? "Send a claim link after you pay."
+                : "Send it on WhatsApp, Instagram, or anywhere."}
             </p>
-            <div className="mt-6 rounded-[24px] bg-white/90 p-4 shadow-pop">
+            <div className="mt-6 rounded-[24px] border-2 border-[var(--foreground)] bg-white p-4 shadow-pop">
               <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted-foreground)]">
-                Present link
+                {giftType === "claimable" ? "Claim link" : "Present link"}
               </p>
               <p className="mt-2 break-all text-sm font-medium text-[var(--foreground)]">
                 {giftLink || "Loading..."}
@@ -96,20 +103,22 @@ export default function SharePage() {
               </a>
             </div>
           </Card>
-          <Card accent="accent" className="bg-white/70">
+          <Card className="bg-white/70" disableHoverFx>
             <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted-foreground)]">
               Next steps
             </p>
             <h2 className="mt-3 text-2xl font-black leading-[1.1]" style={headingStyle}>
-              Track your presents
+              {giftType === "claimable" ? "Recipient claims" : "Track your presents"}
             </h2>
             <p className="mt-3 text-sm text-[var(--muted-foreground)]">
-              Watch presents roll in and withdraw when you&apos;re ready.
+              {giftType === "claimable"
+                ? "Once they claim, you can see the status on your dashboard."
+                : "Watch presents roll in and withdraw when you&apos;re ready."}
             </p>
             <div className="mt-6 flex flex-col gap-3">
-              <Link href={`/g/${code}`}>
+              <Link href={sharePath}>
                 <Button variant="secondary" shape="pill" className="w-full">
-                  View present page
+                  {giftType === "claimable" ? "View claim page" : "View present page"}
                 </Button>
               </Link>
               <Link href="/dashboard">

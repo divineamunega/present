@@ -1,4 +1,7 @@
+"use client";
+
 import { ButtonHTMLAttributes } from "react";
+import { motion } from "motion/react";
 import { cn } from "../lib/cn";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -27,9 +30,12 @@ export default function Button({
   ...props
 }: ButtonProps) {
   return (
-    <button
+    <motion.button
+      whileHover={{ y: -2, x: -2 }}
+      whileTap={{ y: 2, x: 2, scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 260, damping: 16 }}
       className={cn(
-        "inline-flex min-h-[48px] items-center justify-center gap-2 px-5 py-3 text-sm font-bold uppercase tracking-wide transition-all duration-300 ease-bounce hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-pop-active focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--ring)] disabled:cursor-not-allowed disabled:opacity-60",
+        "inline-flex min-h-[48px] cursor-pointer select-none items-center justify-center gap-2 px-5 py-3 text-sm font-bold uppercase tracking-wide transition-all duration-300 ease-bounce hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-pop-active focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--ring)] disabled:cursor-not-allowed disabled:opacity-60",
         variantStyles[variant],
         shapeStyles[shape],
         className,

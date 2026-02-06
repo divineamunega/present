@@ -4,6 +4,8 @@ import Button from "../components/Button";
 import Card from "../components/Card";
 import Layout from "../components/Layout";
 import StatTile from "../components/StatTile";
+import MotionInView from "../components/MotionInView";
+import MagneticTag from "../components/MagneticTag";
 import { headingStyle } from "../lib/typography";
 
 const testimonials = [
@@ -41,7 +43,7 @@ export default function Home() {
     <Layout>
       <section className="px-4 pt-12 md:px-10 md:pt-16">
         <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1.15fr_0.85fr] md:items-center">
-          <div className="flex flex-col gap-6">
+          <MotionInView className="flex flex-col gap-6">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[var(--muted-foreground)]">
               <span className="h-2.5 w-2.5 rounded-full bg-[var(--accent)] shadow-pop" />
               Valentine launch · Nigeria
@@ -65,97 +67,122 @@ export default function Home() {
               </Link>
               <Link
                 href="/u/present"
-                className="text-sm font-bold uppercase tracking-widest text-[var(--foreground)] underline"
+                className="group relative text-sm font-bold uppercase tracking-widest text-[var(--foreground)]"
               >
                 View public stats
+                <span
+                  className="pointer-events-none absolute left-0 top-full mt-1 h-3 w-full transition-transform duration-300 ease-bounce group-hover:-translate-y-0.5"
+                  aria-hidden
+                >
+                  <svg
+                    viewBox="0 0 120 12"
+                    className="h-full w-full"
+                    preserveAspectRatio="none"
+                  >
+                    <path
+                      d="M2 8 C 12 2, 22 12, 32 6 C 42 0, 52 12, 62 6 C 72 0, 82 12, 92 6 C 102 0, 112 12, 118 6"
+                      fill="none"
+                      stroke="#FBBF24"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </span>
               </Link>
             </div>
             <div className="flex flex-wrap gap-3">
               {["No fees", "Instant share", "Local friendly"].map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full bg-white/80 px-4 py-2 text-xs font-bold uppercase tracking-widest text-[var(--foreground)] shadow-pop"
-                >
-                  {item}
-                </span>
+                <MagneticTag key={item}>{item}</MagneticTag>
               ))}
             </div>
-          </div>
+          </MotionInView>
 
-          <Card accent="accent" shadow="pop" className="mx-auto w-full max-w-md bg-white/70">
-            <div className="overflow-hidden rounded-xl border-2 border-[var(--foreground)] bg-[var(--accent)] p-2 shadow-pop">
-              <div className="overflow-hidden rounded-lg border-2 border-[var(--foreground)] bg-white">
-              <img
-                src="/present.png"
-                alt="Present preview"
-                className="h-64 w-full object-cover"
-              />
+          <MotionInView delay={0.05}>
+            <Card
+              accent="accent"
+              shadow="pop"
+              hoverAccent
+              hoverAccentColor="#8B5CF6"
+              className="mx-auto w-full max-w-md bg-white/70"
+            >
+              <div className="overflow-hidden rounded-xl border-2 border-[var(--foreground)] bg-[#8B5CF6] p-2 shadow-pop">
+                <div className="overflow-hidden rounded-lg border-2 border-[var(--foreground)] bg-white">
+                  <img
+                    src="/present.png"
+                    alt="Present preview"
+                    className="h-64 w-full object-cover"
+                  />
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </MotionInView>
         </div>
       </section>
 
       <section className="px-4 py-12 md:px-10">
-        <div className="mx-auto max-w-6xl">
+        <MotionInView className="mx-auto max-w-6xl">
           <div className="grid gap-6 md:grid-cols-3">
             <StatTile label="Total received" value="₦180,500" />
             <StatTile label="Presents delivered" value="36" accent="accent" />
             <StatTile label="Average present" value="₦5,000" accent="accent" />
           </div>
-        </div>
+        </MotionInView>
       </section>
 
       <section className="px-4 py-12 md:px-10">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-            <Card accent="accent" shadow="pop" className="bg-white/70">
-              <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted-foreground)]">
-                How it works
-              </p>
-              <h3 className="mt-3 text-3xl font-black leading-[1.1]" style={headingStyle}>
-                From idea to present link in minutes.
-              </h3>
-              <ul className="mt-6 space-y-4 text-sm text-[var(--muted-foreground)]">
-                {["Pick a template", "Set amounts + note", "Share instantly"].map(
-                  (step, index) => (
-                    <li key={step} className="flex items-center gap-3">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--foreground)] text-white shadow-pop">
-                        0{index + 1}
-                      </span>
-                      <span>{step}</span>
-                    </li>
-                  ),
-                )}
-              </ul>
-            </Card>
-            <Card accent="accent" className="bg-white/70">
-              <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted-foreground)]">
-                Built for presents
-              </p>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                {["Whatsapp share", "Custom amounts", "Present tracking", "Fast setup"].map(
-                  (item) => (
-                    <div
-                      key={item}
-                      className="rounded-[24px] bg-white/90 px-4 py-3 text-sm font-medium text-[var(--foreground)] shadow-pop"
-                    >
-                      {item}
-                    </div>
-                  ),
-                )}
-              </div>
-              <div className="mt-6 flex items-center gap-2 text-sm text-[var(--muted-foreground)]">
-                <Check className="h-4 w-4 text-[var(--foreground)]" aria-hidden strokeWidth={2.5} />
-                Pay with confidence. Stats update instantly.
-              </div>
-            </Card>
+            <MotionInView>
+              <Card accent="accent" shadow="pop" className="bg-white/70">
+                <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted-foreground)]">
+                  How it works
+                </p>
+                <h3 className="mt-3 text-3xl font-black leading-[1.1]" style={headingStyle}>
+                  From idea to present link in minutes.
+                </h3>
+                <ul className="mt-6 space-y-4 text-sm text-[var(--muted-foreground)]">
+                  {["Pick a template", "Set amounts + note", "Share instantly"].map(
+                    (step, index) => (
+                      <li key={step} className="flex items-center gap-3">
+                        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--foreground)] text-white shadow-pop">
+                          0{index + 1}
+                        </span>
+                        <span>{step}</span>
+                      </li>
+                    ),
+                  )}
+                </ul>
+              </Card>
+            </MotionInView>
+            <MotionInView delay={0.05}>
+              <Card accent="accent" className="bg-white/70">
+                <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted-foreground)]">
+                  Built for presents
+                </p>
+                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                  {["Whatsapp share", "Custom amounts", "Present tracking", "Fast setup"].map(
+                    (item) => (
+                      <div
+                        key={item}
+                        className="rounded-[24px] border-2 border-[var(--foreground)] bg-white px-4 py-3 text-sm font-medium text-[var(--foreground)] shadow-pop"
+                      >
+                        {item}
+                      </div>
+                    ),
+                  )}
+                </div>
+                <div className="mt-6 flex items-center gap-2 text-sm text-[var(--muted-foreground)]">
+                  <Check className="h-4 w-4 text-[var(--foreground)]" aria-hidden strokeWidth={2.5} />
+                  Pay with confidence. Stats update instantly.
+                </div>
+              </Card>
+            </MotionInView>
           </div>
         </div>
       </section>
 
       <section className="px-4 py-12 md:px-10">
-        <div className="mx-auto max-w-6xl">
+        <MotionInView className="mx-auto max-w-6xl">
           <div className="grid gap-6 md:grid-cols-3">
             {[
               {
@@ -187,11 +214,11 @@ export default function Home() {
               </Card>
             ))}
           </div>
-        </div>
+        </MotionInView>
       </section>
 
       <section className="px-4 py-12 md:px-10">
-        <div className="mx-auto max-w-6xl">
+        <MotionInView className="mx-auto max-w-6xl">
           <div className="grid gap-6 md:grid-cols-3">
             {testimonials.map((item) => (
               <Card key={item.name} accent="accent" className="bg-white/70">
@@ -205,54 +232,60 @@ export default function Home() {
               </Card>
             ))}
           </div>
-        </div>
+        </MotionInView>
       </section>
 
       <section className="px-4 py-12 md:px-10">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-            <Card accent="accent" shadow="pop" className="bg-white/70">
-              <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted-foreground)]">
-                Built for creators
-              </p>
-              <h3 className="mt-3 text-3xl font-black leading-[1.1]" style={headingStyle}>
-                Everything you need to get presents fast.
-              </h3>
-              <ul className="mt-4 space-y-3 text-sm text-[var(--muted-foreground)]">
-                {["Shareable link in seconds", "Custom amounts + preset chips", "Instant thank-you screen"].map(
-                  (item) => (
-                    <li key={item} className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-[var(--foreground)]" aria-hidden strokeWidth={2.5} />
-                      <span>{item}</span>
-                    </li>
-                  ),
-                )}
-              </ul>
-            </Card>
+            <MotionInView>
+              <Card accent="accent" shadow="pop" className="bg-white/70">
+                <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted-foreground)]">
+                  Built for creators
+                </p>
+                <h3 className="mt-3 text-3xl font-black leading-[1.1]" style={headingStyle}>
+                  Everything you need to get presents fast.
+                </h3>
+                <ul className="mt-4 space-y-3 text-sm text-[var(--muted-foreground)]">
+                  {["Shareable link in seconds", "Custom amounts + preset chips", "Instant thank-you screen"].map(
+                    (item) => (
+                      <li key={item} className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-[var(--foreground)]" aria-hidden strokeWidth={2.5} />
+                        <span>{item}</span>
+                      </li>
+                    ),
+                  )}
+                </ul>
+              </Card>
+            </MotionInView>
             <div className="space-y-4">
-              <Card accent="accent" className="bg-white/70">
-                <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted-foreground)]">
-                  For any occasion
-                </p>
-                <p className="mt-3 text-lg font-extrabold leading-tight" style={headingStyle}>
-                  Valentine today, birthdays tomorrow.
-                </p>
-              </Card>
-              <Card accent="accent" className="bg-white/70">
-                <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted-foreground)]">
-                  Local friendly
-                </p>
-                <p className="mt-3 text-lg font-extrabold leading-tight" style={headingStyle}>
-                  Designed for Nigeria-first celebrations.
-                </p>
-              </Card>
+              <MotionInView>
+                <Card accent="accent" className="bg-white/70">
+                  <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted-foreground)]">
+                    For any occasion
+                  </p>
+                  <p className="mt-3 text-lg font-extrabold leading-tight" style={headingStyle}>
+                    Valentine today, birthdays tomorrow.
+                  </p>
+                </Card>
+              </MotionInView>
+              <MotionInView delay={0.05}>
+                <Card accent="accent" className="bg-white/70">
+                  <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted-foreground)]">
+                    Local friendly
+                  </p>
+                  <p className="mt-3 text-lg font-extrabold leading-tight" style={headingStyle}>
+                    Designed for Nigeria-first celebrations.
+                  </p>
+                </Card>
+              </MotionInView>
             </div>
           </div>
         </div>
       </section>
 
       <section className="px-4 py-12 md:px-10">
-        <div className="mx-auto max-w-5xl">
+        <MotionInView className="mx-auto max-w-5xl">
           <Card accent="accent" shadow="pop" className="bg-white/70">
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div>
@@ -273,11 +306,11 @@ export default function Home() {
               </Link>
             </div>
           </Card>
-        </div>
+        </MotionInView>
       </section>
 
       <section className="px-4 pb-16 md:px-10">
-        <div className="mx-auto max-w-5xl">
+        <MotionInView className="mx-auto max-w-5xl">
           <div className="grid gap-4 md:grid-cols-3">
             {faqs.map((item) => (
               <Card key={item.question} accent="accent" className="bg-white/70">
@@ -288,7 +321,7 @@ export default function Home() {
               </Card>
             ))}
           </div>
-        </div>
+        </MotionInView>
       </section>
     </Layout>
   );

@@ -1,8 +1,6 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
 import GeoLogo from "./GeoLogo";
 
 type LayoutProps = {
@@ -10,8 +8,6 @@ type LayoutProps = {
 };
 
 export default function Layout({ children }: LayoutProps) {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   return (
     <div className="relative min-h-screen overflow-hidden bg-[var(--background)]">
       <div className="pointer-events-none absolute inset-0 -z-10">
@@ -30,81 +26,12 @@ export default function Layout({ children }: LayoutProps) {
             <GeoLogo />
           </Link>
           <nav className="flex flex-1 items-center justify-end text-xs font-bold uppercase tracking-widest text-[var(--foreground)]">
-            <div className="hidden items-center gap-3 sm:flex">
-              <div className="flex flex-wrap items-center gap-2 rounded-full border-2 border-[var(--foreground)] bg-[var(--muted)] px-2 py-2 shadow-pop">
-                <Link
-                  href="/create"
-                  className="rounded-full px-3 py-2 transition-all duration-300 ease-bounce hover:-translate-x-0.5 hover:-translate-y-0.5"
-                >
-                  Create
-                </Link>
-                <Link
-                  href="/dashboard"
-                  className="rounded-full px-3 py-2 transition-all duration-300 ease-bounce hover:-translate-x-0.5 hover:-translate-y-0.5"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  href="/u/present"
-                  className="rounded-full px-3 py-2 transition-all duration-300 ease-bounce hover:-translate-x-0.5 hover:-translate-y-0.5"
-                >
-                  My Presents
-                </Link>
-              </div>
-              <Link
-                href="/sign-in"
-                className="rounded-full bg-[var(--accent)] px-4 py-2 text-[var(--accent-foreground)] shadow-pop transition-all duration-300 ease-bounce hover:-translate-x-0.5 hover:-translate-y-0.5"
-              >
-                Sign in
-              </Link>
-            </div>
-
-            <div className="relative sm:hidden">
-              <button
-                type="button"
-                onClick={() => setMenuOpen((prev) => !prev)}
-                aria-expanded={menuOpen}
-                aria-label="Toggle navigation"
-                className="inline-flex items-center justify-center rounded-full border-2 border-[var(--foreground)] bg-white px-3 py-2 shadow-pop transition-all duration-300 ease-bounce focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--ring)]"
-              >
-                {menuOpen ? <X className="h-4 w-4" strokeWidth={2.5} /> : <Menu className="h-4 w-4" strokeWidth={2.5} />}
-              </button>
-              <div
-                className={`absolute right-0 top-12 z-10 w-52 rounded-[24px] border-2 border-[var(--foreground)] bg-white p-3 shadow-pop ${menuOpen ? "block" : "hidden"}`}
-                aria-hidden={!menuOpen}
-              >
-                <div className="flex flex-col gap-2 text-[var(--foreground)]">
-                  <Link
-                    href="/create"
-                    onClick={() => setMenuOpen(false)}
-                    className="rounded-[16px] px-3 py-2 transition-all duration-300 ease-bounce hover:-translate-x-0.5 hover:-translate-y-0.5"
-                  >
-                    Create
-                  </Link>
-                  <Link
-                    href="/dashboard"
-                    onClick={() => setMenuOpen(false)}
-                    className="rounded-[16px] px-3 py-2 transition-all duration-300 ease-bounce hover:-translate-x-0.5 hover:-translate-y-0.5"
-                  >
-                    Dashboard
-                  </Link>
-                  <Link
-                    href="/u/present"
-                    onClick={() => setMenuOpen(false)}
-                    className="rounded-[16px] px-3 py-2 transition-all duration-300 ease-bounce hover:-translate-x-0.5 hover:-translate-y-0.5"
-                  >
-                    My Presents
-                  </Link>
-                  <Link
-                    href="/sign-in"
-                    onClick={() => setMenuOpen(false)}
-                    className="rounded-[16px] bg-[var(--accent)] px-3 py-2 text-[var(--accent-foreground)] shadow-pop"
-                  >
-                    Sign in
-                  </Link>
-                </div>
-              </div>
-            </div>
+            <Link
+              href="/sign-in"
+              className="rounded-full bg-[var(--accent)] px-4 py-2 text-[var(--accent-foreground)] shadow-pop transition-all duration-300 ease-bounce hover:-translate-x-0.5 hover:-translate-y-0.5"
+            >
+              Sign in
+            </Link>
           </nav>
         </div>
       </header>

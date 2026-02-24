@@ -88,11 +88,16 @@ export default function DashboardPage() {
                 Your presents
               </h1>
             </div>
-            <Link href={tab === "send" ? "/create?type=claimable" : "/create?type=request"}>
-              <Button variant="primary" shape="pill">
-                {tab === "send" ? "Create send link" : "Create request link"}
-              </Button>
-            </Link>
+            <div className="flex flex-wrap gap-2">
+              <Link href={tab === "send" ? "/create?type=claimable" : "/create?type=request"}>
+                <Button variant="primary" shape="pill">
+                  {tab === "send" ? "Create send link" : "Create request link"}
+                </Button>
+              </Link>
+              <Link href="/wallet">
+                <Button variant="outline" shape="pill">Wallet</Button>
+              </Link>
+            </div>
           </div>
 
           <div className="mt-8 grid gap-6 md:grid-cols-3">
@@ -114,7 +119,7 @@ export default function DashboardPage() {
                   : "bg-white text-[var(--foreground)]"
               }`}
             >
-              Request links
+              Ask for a present
             </button>
             <button
               type="button"
@@ -128,15 +133,20 @@ export default function DashboardPage() {
                   : "bg-white text-[var(--foreground)]"
               }`}
             >
-              Send links
+              Send a present
             </button>
           </div>
+          <p className="mt-3 text-sm text-[var(--muted-foreground)]">
+            {tab === "request"
+              ? "Create a link so anyone can contribute."
+              : "You pay first, then share a claim link."}
+          </p>
 
           {tab === "request" ? (
             <div className="mt-8 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]" role="tabpanel" id="request-panel">
               <Card shadow="pop" className="bg-white/70" disableHoverFx>
                 <h2 className="text-xl font-extrabold" style={headingStyle}>
-                  Request links
+                  Ask for a present
                 </h2>
                 <p className="mt-2 text-sm text-[var(--muted-foreground)]">
                   Share a link that anyone can contribute to.
@@ -217,7 +227,7 @@ export default function DashboardPage() {
             <div className="mt-8 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]" role="tabpanel" id="send-panel">
               <Card shadow="pop" className="bg-white/70" disableHoverFx>
                 <h2 className="text-xl font-extrabold" style={headingStyle}>
-                  Send links
+                  Send a present
                 </h2>
                 <p className="mt-2 text-sm text-[var(--muted-foreground)]">
                   You pay first, then send a claim link.

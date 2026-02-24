@@ -66,7 +66,11 @@ body {
     box-shadow: 8px 8px 0px 0px var(--border);
   }
   .pattern-dots {
-    background-image: radial-gradient(circle, rgba(30, 41, 59, 0.25) 1.5px, transparent 1.5px);
+    background-image: radial-gradient(
+      circle,
+      rgba(30, 41, 59, 0.25) 1.5px,
+      transparent 1.5px
+    );
     background-size: 18px 18px;
   }
   .pattern-grid {
